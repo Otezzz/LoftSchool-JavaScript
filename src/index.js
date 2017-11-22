@@ -19,9 +19,9 @@ function defaultParameterValue(a, b) {
     if (!b) {
         b = 100;
     }
+
     return a + b;
 }
-
 
 /*
  Задание 3:
@@ -31,9 +31,11 @@ function defaultParameterValue(a, b) {
  */
 function returnArgumentsArray() {
     var arr = [];
+
     for (var i = 0; i < arguments.length; i++) {
         arr.push(arguments[i]);
     }
+
     return arr;
 }
 
@@ -43,11 +45,12 @@ function returnArgumentsArray() {
  Функция должна принимать другую функцию и возвращать результат вызова переданной функции
  */
 function returnFnResult(fn) {
-    return console.log(fn);
+    return fn();
 }
-function fn(a, b) {
-    return (a + b);
+function fn() {
+    return (10 + 10);
 }
+returnFnResult(fn);
 
 /*
  Задание 5:
@@ -56,6 +59,11 @@ function fn(a, b) {
  При вызове F, переданное число должно быть увеличено на единицу и возвращено из F
  */
 function returnCounter(number) {
+    if (!number) {
+        number = 0;
+    }
+
+    return function f() { number++; return number };
 }
 
 /*
@@ -64,8 +72,24 @@ function returnCounter(number) {
  Функция должна принимать другую функцию (F) и некоторое количество дополнительных аргументов
  Функция должна привязать переданные аргументы к функции F и вернуть получившуюся функцию
  */
+
 function bindFunction(fn) {
+    var argArr = [];
+
+    for (var i = 1; i < arguments.length; i++) {
+        argArr.push(arguments[i]);
+    }
+
+    return function() {
+        return fn.apply(null, argArr);
+    }
 }
+
+// function fn3 () {
+//     console.log(arguments);
+// }
+//
+// bindFunction(fn3, 10, 20, 30);
 
 export {
     returnFirstArgument,
