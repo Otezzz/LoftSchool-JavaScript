@@ -30,7 +30,11 @@ function defaultParameterValue(a, b) {
  Количество переданных аргументов заранее неизвестно
  */
 function returnArgumentsArray() {
+    var arr = [];
+    arr.push(arguments);
+    console.log(arr);
 }
+returnArgumentsArray(10, 22, 'привет', 154);
 
 /*
  Задание 4:
@@ -58,11 +62,11 @@ function returnCounter(number) {
 function bindFunction(fn) {
 }
 
-export {
-    returnFirstArgument,
-    defaultParameterValue,
-    returnArgumentsArray,
-    returnFnResult,
-    returnCounter,
-    bindFunction
-}
+// export {
+//     returnFirstArgument,
+//     defaultParameterValue,
+//     returnArgumentsArray,
+//     returnFnResult,
+//     returnCounter,
+//     bindFunction
+// }
