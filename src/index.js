@@ -31,10 +31,11 @@ function defaultParameterValue(a, b) {
  */
 function returnArgumentsArray() {
     var arr = [];
-    arr.push(arguments);
-    console.log(arr);
+    for (var i = 0; i < arguments.length; i++) {
+        arr.push(arguments[i]);
+    }
+    return arr;
 }
-returnArgumentsArray(10, 22, 'привет', 154);
 
 /*
  Задание 4:
@@ -42,6 +43,10 @@ returnArgumentsArray(10, 22, 'привет', 154);
  Функция должна принимать другую функцию и возвращать результат вызова переданной функции
  */
 function returnFnResult(fn) {
+    return console.log(fn);
+}
+function fn(a, b) {
+    return (a + b);
 }
 
 /*
@@ -62,11 +67,11 @@ function returnCounter(number) {
 function bindFunction(fn) {
 }
 
-// export {
-//     returnFirstArgument,
-//     defaultParameterValue,
-//     returnArgumentsArray,
-//     returnFnResult,
-//     returnCounter,
-//     bindFunction
-// }
+export {
+    returnFirstArgument,
+    defaultParameterValue,
+    returnArgumentsArray,
+    returnFnResult,
+    returnCounter,
+    bindFunction
+}
