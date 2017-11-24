@@ -82,10 +82,10 @@ function fn2(a) {
 function returnBadArguments(fn3) {
     var arrElem = [];
 
-    if (typeof(fn3) !== 'function') {
+    if (typeof fn3 !== 'function') {
         throw new Error('fn is not a function');
     }
-    if (arguments.length == 1) {
+    if (arguments.length === 1) {
         return arrElem = [];
     }
 
@@ -118,7 +118,54 @@ returnBadArguments(fn3, 12, 54, 11, 42, 15, 17);
  - number не является числом (с текстом "number is not a number")
  - какой-либо из аргументов div является нулем (с текстом "division by 0")
  */
-function calculator() {
+
+function calculator(number) {
+    if (!number) {
+        number = 0;
+    }
+    if (typeof number !== 'number') {
+        throw new Error('number is not a number');
+    }
+
+    var mathObj = {
+        sum: function () {
+            for (var i = 0; i < arguments.length; i++) {
+                number += arguments[i];
+                console.log(number);
+            }
+
+            return number;
+        },
+        dif: function () {
+            for (var i = 0; i < arguments.length; i++) {
+                number -= arguments[i];
+                console.log(number);
+            }
+
+            return number;
+        },
+        div: function () {
+            for (var i = 0; i < arguments.length; i++) {
+                if (number === 0 || arguments[i] === 0) {
+                    throw new Error('division by 0');
+                }
+                number /= arguments[i];
+                console.log(number);
+            }
+
+            return number;
+        },
+        mul: function () {
+            for (var i = 0; i < arguments.length; i++) {
+                number *= arguments[i];
+                console.log(number);
+            }
+
+            return number;
+        }
+    };
+
+    return mathObj;
 }
 
 export {
