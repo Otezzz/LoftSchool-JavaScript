@@ -85,6 +85,9 @@ function returnBadArguments(fn3) {
     if (typeof(fn3) !== 'function') {
         throw new Error('fn is not a function');
     }
+    if (arguments.length == 1) {
+        return arrElem = [];
+    }
 
     for (var i = 1; i < arguments.length; i++) {
         console.log(arguments[i]);
@@ -118,9 +121,9 @@ returnBadArguments(fn3, 12, 54, 11, 42, 15, 17);
 function calculator() {
 }
 
-// export {
-//     isAllTrue,
-//     isSomeTrue,
-//     returnBadArguments,
-//     calculator
-// };
+export {
+    isAllTrue,
+    isSomeTrue,
+    returnBadArguments,
+    calculator
+};
