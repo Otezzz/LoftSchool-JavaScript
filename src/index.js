@@ -9,8 +9,44 @@
  - fn не является функцией (с текстом "fn is not a function")
  Зарпещено использовать встроенные методы для работы с массивами
  */
+
+var array = [];
 function isAllTrue(array, fn) {
+
+    try {
+        if ((array.length === 0) || !(array instanceof Array)) {
+            throw new Error('empty array');
+        }
+        if (typeof(fn) !== 'function') {
+            throw new Error('fn is not a function');
+        }
+    }
+    catch (e) {
+        console.error(e.message);
+        return false;
+    }
+
+    for (var i = 0; i < array.length; i++) {
+        if (!fn(array[i])) {
+            console.log("false main");
+            return false;
+        }
+    }
+    console.log("true main");
+    return true;
 }
+function fn(a) {
+    if (a) {
+        console.log("true");
+        return true;
+    } else {
+        console.log("false");
+        return false;
+    }
+}
+
+isAllTrue(array, fn);
+
 
 /*
  Задача 2:
@@ -21,7 +57,7 @@ function isAllTrue(array, fn) {
  - fn не является функцией (с текстом "fn is not a function")
  Зарпещено использовать встроенные методы для работы с массивами
  */
-function isSomeTrue(array, fn) {
+function isSomeTrue(array2, fn2) {
 }
 
 /*
@@ -32,7 +68,7 @@ function isSomeTrue(array, fn) {
  Необходимо выбрасывать исключение в случаях:
  - fn не является функцией (с текстом "fn is not a function")
  */
-function returnBadArguments(fn) {
+function returnBadArguments(fn3) {
 }
 
 /*
@@ -52,9 +88,9 @@ function returnBadArguments(fn) {
 function calculator() {
 }
 
-export {
-    isAllTrue,
-    isSomeTrue,
-    returnBadArguments,
-    calculator
-};
+// export {
+//     isAllTrue,
+//     isSomeTrue,
+//     returnBadArguments,
+//     calculator
+// };
