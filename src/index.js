@@ -10,42 +10,30 @@
  Зарпещено использовать встроенные методы для работы с массивами
  */
 
-var array = [];
+var array = [10, null, 22];
 function isAllTrue(array, fn) {
 
-    try {
-        if ((array.length === 0) || !(array instanceof Array)) {
-            throw new Error('empty array');
-        }
-        if (typeof(fn) !== 'function') {
-            throw new Error('fn is not a function');
-        }
+    if ((array.length === 0) || !(array instanceof Array)) {
+        throw new Error('empty array');
     }
-    catch (e) {
-        console.error(e.message);
-        return false;
+    if (typeof(fn) !== 'function') {
+        throw new Error('fn is not a function');
     }
 
     for (var i = 0; i < array.length; i++) {
         if (!fn(array[i])) {
-            console.log("false main");
             return false;
         }
     }
-    console.log("true main");
     return true;
 }
 function fn(a) {
     if (a) {
-        console.log("true");
         return true;
     } else {
-        console.log("false");
         return false;
     }
 }
-
-isAllTrue(array, fn);
 
 
 /*
@@ -57,7 +45,30 @@ isAllTrue(array, fn);
  - fn не является функцией (с текстом "fn is not a function")
  Зарпещено использовать встроенные методы для работы с массивами
  */
+
+var array2 = [10, null, 22];
 function isSomeTrue(array2, fn2) {
+
+    if ((array2.length === 0) || !(array2 instanceof Array)) {
+        throw new Error('empty array');
+    }
+    if (typeof(fn2) !== 'function') {
+        throw new Error('fn is not a function');
+    }
+
+    for (var i = 0; i < array2.length; i++) {
+        if (fn2(array2[i])) {
+            return true;
+        }
+    }
+    return false;
+}
+function fn2(a) {
+    if (a) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 /*
@@ -69,7 +80,26 @@ function isSomeTrue(array2, fn2) {
  - fn не является функцией (с текстом "fn is not a function")
  */
 function returnBadArguments(fn3) {
+    var arrElem = [];
+
+    if (typeof(fn3) !== 'function') {
+        throw new Error('fn is not a function');
+    }
+
+    for (var i = 1; i < arguments.length; i++) {
+        console.log(arguments[i]);
+        if (fn3(arguments[i])) {
+            arrElem.push(arguments[i]);
+        }
+    }
+    console.log(arrElem);
 }
+
+function fn3(a) {
+    return (a % 2);
+}
+
+returnBadArguments(fn3, 12, 54, 11, 42, 15, 17);
 
 /*
  Задача 4:
