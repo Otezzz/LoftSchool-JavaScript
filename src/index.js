@@ -11,23 +11,23 @@
  */
 
 var array = [10, null, 22];
-function isAllTrue(array, fn) {
+function isAllTrue(array, fn3) {
 
     if ((array.length === 0) || !(array instanceof Array)) {
         throw new Error('empty array');
     }
-    if (typeof(fn) !== 'function') {
+    if (typeof(fn3) !== 'function') {
         throw new Error('fn is not a function');
     }
 
     for (var i = 0; i < array.length; i++) {
-        if (!fn(array[i])) {
+        if (!fn3(array[i])) {
             return false;
         }
     }
     return true;
 }
-function fn(a) {
+function fn3(a) {
     if (a) {
         return true;
     } else {
@@ -79,10 +79,10 @@ function fn2(a) {
  Необходимо выбрасывать исключение в случаях:
  - fn не является функцией (с текстом "fn is not a function")
  */
-function returnBadArguments(fn3) {
+function returnBadArguments(fn) {
     var arrElem = [];
 
-    if (typeof fn3 !== 'function') {
+    if (typeof fn !== 'function') {
         throw new Error('fn is not a function');
     }
     if (arguments.length === 1) {
@@ -91,18 +91,30 @@ function returnBadArguments(fn3) {
 
     for (var i = 1; i < arguments.length; i++) {
         console.log(arguments[i]);
-        if (fn3(arguments[i])) {
+        if (!fn(arguments[i])) {
             arrElem.push(arguments[i]);
         }
     }
     console.log(arrElem);
+
+    return arrElem;
 }
 
-function fn3(a) {
-    return (a % 2);
+function fn(a) {
+    try {
+        if (a % 2 != 0) {
+            throw new Error('not even');
+        }
+    } catch (e){
+        console.log(e.message);
+
+        return false;
+    }
+
+    return true;
 }
 
-returnBadArguments(fn3, 12, 54, 11, 42, 15, 17);
+returnBadArguments(fn, 12, 54, 11, 42, 15, 17);
 
 /*
  Задача 4:
