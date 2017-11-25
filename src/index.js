@@ -79,6 +79,7 @@ function fn2(a) {
  Необходимо выбрасывать исключение в случаях:
  - fn не является функцией (с текстом "fn is not a function")
  */
+
 function returnBadArguments(fn) {
     var arrElem = [];
 
@@ -91,7 +92,12 @@ function returnBadArguments(fn) {
 
     for (var i = 1; i < arguments.length; i++) {
         console.log(arguments[i]);
-        if (!fn(arguments[i])) {
+
+        try {
+            fn(arguments[i]);
+
+        } catch (e){
+            console.log(e.message);
             arrElem.push(arguments[i]);
         }
     }
@@ -100,21 +106,6 @@ function returnBadArguments(fn) {
     return arrElem;
 }
 
-function fn(a) {
-    try {
-        if (a % 2 != 0) {
-            throw new Error('not even');
-        }
-    } catch (e){
-        console.log(e.message);
-
-        return false;
-    }
-
-    return true;
-}
-
-returnBadArguments(fn, 12, 54, 11, 42, 15, 17);
 
 /*
  Задача 4:
