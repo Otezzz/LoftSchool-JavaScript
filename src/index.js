@@ -48,7 +48,9 @@ function reduce(array, fn, initial) {
  Функция принимает объект и имя свойства, которое необходиом удалить из объекта
  Функция должна удалить указанное свойство из указанного объекта
  */
+
 function deleteProperty(obj, prop) {
+    delete obj[prop];
 }
 
 /*
@@ -57,14 +59,24 @@ function deleteProperty(obj, prop) {
  Функция должна проверить существует ли укзаанное свойство в указанном объекте
  */
 function hasProperty(obj, prop) {
+    if (prop in obj) {
+        console.log( "Свойство name существует!" );
+
+        return true;
+    }
+
+    return false;
 }
 
 /*
  Задача 6:
  Функция должна получить все перечисляемые свойства объекта и вернуть их в виде массива
  */
+
 function getEnumProps(obj) {
+    return Object.keys(obj);
 }
+
 
 /*
  Задача 7:
@@ -85,6 +97,11 @@ function slice(array, from, to) {
  Функция принимает объект и должна вернуть Proxy для этого объекта
  Proxy должен перехватывать все попытки записи значений свойств и возводить это значение в квадрат
  */
+var obj = {
+    name: 'fre',
+    fame: 'ccs'
+};
+
 function createProxy(obj) {
 }
 
@@ -98,4 +115,5 @@ export {
     upperProps,
     slice,
     createProxy
+
 };
