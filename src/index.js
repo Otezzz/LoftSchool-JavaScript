@@ -60,7 +60,7 @@ function deleteProperty(obj, prop) {
  */
 function hasProperty(obj, prop) {
     if (prop in obj) {
-        console.log( "Свойство name существует!" );
+        console.log("Свойство name существует!");
 
         return true;
     }
@@ -82,25 +82,82 @@ function getEnumProps(obj) {
  Задача 7:
  Функция должна перебрать все свойства объекта, преобразовать их имена в верхний регистра и вернуть в виде массива
  */
-function upperProps(obj) {
+
+var obj = {
+    name: 10,
+    fame: 20
+};
+
+function upperProps(obj, prop) {
+    var propArr = [];
+
+    for (prop in obj) {
+        propArr.push(prop.toUpperCase());
+    }
+
+    console.log(propArr);
+
+    return propArr;
 }
+// upperProps(obj);
 
 /*
  Задача 8 *:
  Напишите аналог встроенного метода slice для работы с массивами
  */
+
+var array = [1, 2, 3, 4, 5, 6, 7];
+
 function slice(array, from, to) {
+    var i = from;
+    var result = [];
+
+    try {
+
+        if (from >= to && from !== 0) {
+            throw new Error("от больше или равно до");
+        }
+        if (from > array.length && to === undefined) {
+            throw new Error("от больше длинны массива");
+        }
+    }   catch (err) {
+        console.log(err.message);
+
+        return result;
+    }
+
+    if (from === undefined && to === undefined) {
+        return array;
+    }
+    if (to === undefined) {
+        to = array.length;
+    }
+    if (to < 0) {
+        to = to + array.length;
+    }
+    if (to > array.length) {
+        to = array.length;
+    }
+    if (Math.abs(from) > array.length) {
+        i = 0;
+    }
+
+
+    for (i; i < to; i++) {
+        result.push(array[i]);
+    }
+
+    console.log(result);
+    return result;
 }
+
+slice(array);
 
 /*
  Задача 9 *:
  Функция принимает объект и должна вернуть Proxy для этого объекта
  Proxy должен перехватывать все попытки записи значений свойств и возводить это значение в квадрат
  */
-var obj = {
-    name: 10,
-    fame: 20
-};
 
 function createProxy(obj) {
     var objHandler = {
@@ -117,6 +174,7 @@ function createProxy(obj) {
 
 createProxy(obj);
 
+
 export {
     forEach,
     map,
@@ -127,5 +185,4 @@ export {
     upperProps,
     slice,
     createProxy
-
 };
