@@ -7,7 +7,14 @@
  * @return {Element}
  */
 function createDivWithText(text) {
+    var Element = document.createElement('DIV');
+    Element.innerHTML = text;
+
+    return Element;
+
 }
+
+createDivWithText('string');
 
 /**
  * Функция должна создать элемент с тегом A, установить значение для атрибута href и вернуть получившийся элемент
@@ -16,7 +23,14 @@ function createDivWithText(text) {
  * @return {Element}
  */
 function createAWithHref(hrefValue) {
+    var Element = document.createElement('a');
+    Element.setAttribute('href', hrefValue);
+
+    return Element;
+
 }
+
+createAWithHref('hrefValue');
 
 /**
  * Функция должна вставлять элемент what в начало элемента where
@@ -25,6 +39,8 @@ function createAWithHref(hrefValue) {
  * @param {Element} where - куда вставлять
  */
 function prepend(what, where) {
+    var first = where.firstChild;
+    where.insertBefore(what, first);
 }
 
 /**
@@ -42,6 +58,8 @@ function prepend(what, where) {
  * т.к. следующим соседом этих элементов является элемент с тегом P
  */
 function findAllPSiblings(where) {
+    var where = document.createElement('div');
+
 }
 
 /**
