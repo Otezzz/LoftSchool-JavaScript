@@ -58,8 +58,11 @@ function prepend(what, where) {
  * т.к. следующим соседом этих элементов является элемент с тегом P
  */
 function findAllPSiblings(where) {
-    var where = document.createElement('div');
-
+    // var childArr = [];
+    // var children = where.children;
+    // for (var i = 0; i < children.length; i++) {
+    //     where.children[i].nextElementSibling;
+    // }
 }
 
 /**
