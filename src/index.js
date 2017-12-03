@@ -7,7 +7,8 @@
  * @return {Element}
  */
 function createDivWithText(text) {
-    var Element = document.createElement('DIV');
+    let Element = document.createElement('DIV');
+
     Element.innerHTML = text;
 
     return Element;
@@ -23,7 +24,8 @@ createDivWithText('string');
  * @return {Element}
  */
 function createAWithHref(hrefValue) {
-    var Element = document.createElement('a');
+    let Element = document.createElement('a');
+
     Element.setAttribute('href', hrefValue);
 
     return Element;
@@ -39,7 +41,8 @@ createAWithHref('hrefValue');
  * @param {Element} where - куда вставлять
  */
 function prepend(what, where) {
-    var first = where.firstChild;
+    let first = where.firstChild;
+
     where.insertBefore(what, first);
 }
 
@@ -61,7 +64,7 @@ function findAllPSiblings(where) {
     let result = [];
     let children = where.children;
 
-    for (var i = 0; i < children.length; i++) {
+    for (let i = 0; i < children.length; i++) {
         if (children[i].tagName === 'P') {
             result.push(children[i].previousElementSibling);
         }
@@ -80,11 +83,11 @@ function findAllPSiblings(where) {
  * @return {Array<string>}
  */
 function findError(where) {
-    var result = [];
+    let result = [];
 
-    for (var i = 0; i < where.children.length; i++) {
+    for (let i = 0; i < where.children.length; i++) {
         result.push(where.children[i].innerText);
-        console.log(result);
+        // console.log(result);
     }
 
     return result;
@@ -104,8 +107,8 @@ function findError(where) {
  * должно быть преобразовано в <div></div><p></p>
  */
 function deleteTextNodes(where) {
-    for (var i = 0; i < where.childNodes.length; i++) {
-        var child = where.childNodes[i];
+    for (let i = 0; i < where.childNodes.length; i++) {
+        let child = where.childNodes[i];
 
         if (where.childNodes[i].nodeType == 3) {
             where.removeChild(child);
@@ -124,7 +127,7 @@ function deleteTextNodes(where) {
  * должно быть преобразовано в <span><div><b></b></div><p></p></span>
  */
 function deleteTextNodesRecursive(where) {
-    for (var i = 0; i < where.childNodes.length; i++) {
+    for (let i = 0; i < where.childNodes.length; i++) {
 
         if (where.childNodes[i].nodeType === 3) {
             where.removeChild(where.childNodes[i]);
@@ -135,7 +138,7 @@ function deleteTextNodesRecursive(where) {
         }
 
     }
-    console.log(where);
+    // console.log(where);
 }
 
 /**
@@ -161,6 +164,40 @@ function deleteTextNodesRecursive(where) {
  * }
  */
 function collectDOMStat(root) {
+    let stats = {
+        tags: {},
+        classes: {},
+        texts: 0
+    };
+
+    function textCount(root) {
+
+        for (let i = 0; i < root.childNodes.length; i++) {
+            let taglet = root.childNodes[i].tagName;
+            let classlet = root.childNodes[i].classList;
+
+            console.log(classlet);
+
+
+            if (root.childNodes[i].nodeType === 3) {
+                stats.texts = stats.texts + 1;
+            } else {
+                !stats.tags[taglet] ? stats.tags[taglet] = 1 : stats.tags[taglet] += 1;
+
+                for (let j = 0; j < classlet.length; j++) {
+                    let someCls = classlet[j];
+                    !stats.classes[someCls] ? stats.classes[someCls] = 1 : stats.classes[someCls] += 1;
+                }
+                textCount(root.childNodes[i]);
+            }
+        }
+    }
+
+    textCount(root);
+    console.log(stats.texts);
+    console.log(stats.classes);
+
+    return stats;
 }
 
 /**
@@ -195,6 +232,37 @@ function collectDOMStat(root) {
  * }
  */
 function observeChildNodes(where, fn) {
+
+    let mutObserver = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+            let info = {
+                type: '',
+                nodes: []
+            };
+            
+            console.log(mutation.type);
+
+            for (let i = 0; i < mutation.addedNodes.length; i++) {
+                info.type = 'insert';
+                info.nodes.push(mutation.addedNodes[i]);
+            }
+            
+            for (let i = 0; i < mutation.removedNodes.length; i++) {
+                info.type = 'remove';
+                info.nodes.push(mutation.removedNodes[i]);
+            }
+
+            console.log(fn(info));
+
+            return fn(info);
+        });
+    });
+
+    mutObserver.observe(where, {
+        attributes: true,
+        childList: true,
+        characterData: true
+    });
 }
 
 export {
