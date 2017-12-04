@@ -15,6 +15,14 @@
  */
 let homeworkContainer = document.querySelector('#homework-container');
 
+function randomizer() {
+    var randomNumber = Math.floor(Math.random() * 100);
+    console.log(randomNumber);
+}
+randomizer();
+
+/*===============================*/
+
 /**
  * Функция должна создавать и возвращать новый div с классом draggable-div и случайными размерами/цветом/позицией
  * Функция должна только создавать элемент и задвать ему случайные размер/позицию/цвет
@@ -23,7 +31,12 @@ let homeworkContainer = document.querySelector('#homework-container');
  * @return {Element}
  */
 function createDiv() {
+    var newDiv = document.createElement('DIV');
+    console.log(newDiv);
 }
+createDiv();
+
+/*===============================*/
 
 /**
  * Функция должна добавлять обработчики событий для перетаскивания элемента при помощи drag and drop
