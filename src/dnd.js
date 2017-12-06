@@ -14,12 +14,27 @@
  * homeworkContainer.appendChild(...);
  */
 let homeworkContainer = document.querySelector('#homework-container');
+let maxWidth = 100;
+let maxHeight = 100;
+let winWidth = window.innerWidth;
+let winHeight = window.innerHeight;
 
-function randomizer() {
-    var randomNumber = Math.floor(Math.random() * 100);
-    console.log(randomNumber);
+function randomVal(a) {
+    var randomNumber = Math.floor(Math.random() * a);
+    // console.log(randomNumber);
+
+    return randomNumber;
 }
-randomizer();
+function rgb() {
+
+    var r =  Math.floor(Math.random() * 255);
+    var g =  Math.floor(Math.random() * 255);
+    var b =  Math.floor(Math.random() * 255);
+
+    var randomColor = 'rgb(' + r + ',' + g + ',' + b + ')';
+
+    return randomColor;
+}
 
 /*===============================*/
 
@@ -31,10 +46,19 @@ randomizer();
  * @return {Element}
  */
 function createDiv() {
-    var newDiv = document.createElement('DIV');
-    console.log(newDiv);
+    var div = document.createElement('DIV');
+
+    div.classList.add('draggable-div');
+    div.style.height = randomVal(maxHeight) + 'px';
+    div.style.width = randomVal(maxWidth) + 'px';
+    div.style.position = 'absolute';
+    div.style.top = randomVal(winHeight) + 'px';
+    div.style.left = randomVal(winWidth) + 'px';
+    div.style.background = rgb();
+    console.log(div);
+
+    return div;
 }
-createDiv();
 
 /*===============================*/
 
