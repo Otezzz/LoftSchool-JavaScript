@@ -30,7 +30,6 @@ function rgb() {
     var r =  Math.floor(Math.random() * 255);
     var g =  Math.floor(Math.random() * 255);
     var b =  Math.floor(Math.random() * 255);
-
     var randomColor = 'rgb(' + r + ',' + g + ',' + b + ')';
 
     return randomColor;
@@ -55,6 +54,7 @@ function createDiv() {
     div.style.top = randomVal(winHeight) + 'px';
     div.style.left = randomVal(winWidth) + 'px';
     div.style.background = rgb();
+    // div.setAttribute('draggable', 'true');
     console.log(div);
 
     return div;
@@ -68,7 +68,41 @@ function createDiv() {
  * @param {Element} target
  */
 function addListeners(target) {
+    target.onmousedown = () => {
+        let divMove = (e) => {
+            target.style.left = e.pageX - target.offsetWidth / 2 + 'px';
+            target.style.top = e.pageY - target.offsetHeight / 2 + 'px';
+        };
+
+        document.onmousemove = e => divMove(e);
+
+        target.onmouseup = () => {
+            document.onmousemove = null;
+            target.onmouseup = null;
+        }
+    }
 }
+
+// function addListeners(target) {
+//     function handleDragStart(e) {
+//         this.style.opacity = '0.4';
+//     }
+//     function handleDrop(e) {
+//
+//         if (e.stopPropagation) {
+//             e.stopPropagation();
+//         }
+//
+//         return false;
+//     }
+//
+//     var cols = document.querySelectorAll('.draggable-div');
+//
+//     cols.forEach.call(cols, function(col) {
+//         col.addEventListener('dragstart', handleDragStart, false);
+//         col.addEventListener('drop', handleDrop, false);
+//     });
+// }
 
 let addDivButton = homeworkContainer.querySelector('#addDiv');
 
