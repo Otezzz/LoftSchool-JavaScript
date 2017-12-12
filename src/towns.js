@@ -36,6 +36,37 @@ let homeworkContainer = document.querySelector('#homework-container');
  * @return {Promise<Array<{name: string}>>}
  */
 function loadTowns() {
+    var promise = new Promise(function (resolve, reject) {
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open('GET', 'https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json');
+        xhr.send();
+        xhr.addEventListener('load', () => {
+            var arrCity = JSON.parse(xhr.response);
+
+            console.log(arrCity);
+            resolve(sorting(arrCity));
+        });
+    });
+
+    return promise;
+}
+
+function sorting(arr) {
+    arr.sort((a, b) => {
+        if (a.name > b.name) {
+            return 1;
+        }
+
+        if (a.name < b.name) {
+            return -1;
+        }
+
+        return 0;
+    });
+
+    return arr;
 }
 
 /**
@@ -61,6 +92,7 @@ let filterResult = homeworkContainer.querySelector('#filter-result');
 let townsPromise;
 
 filterInput.addEventListener('keyup', function() {
+
 });
 
 export {
