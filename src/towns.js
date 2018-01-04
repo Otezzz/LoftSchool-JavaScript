@@ -36,7 +36,7 @@ let homeworkContainer = document.querySelector('#homework-container');
  * @return {Promise<Array<{name: string}>>}
  */
 function loadTowns() {
-    var promise = new Promise(function (resolve, reject) {
+    return new Promise(function (resolve) {
 
         var xhr = new XMLHttpRequest();
 
@@ -45,12 +45,9 @@ function loadTowns() {
         xhr.addEventListener('load', () => {
             var arrCity = JSON.parse(xhr.response);
 
-            console.log(arrCity);
             resolve(sorting(arrCity));
         });
     });
-
-    return promise;
 }
 
 function sorting(arr) {
@@ -83,15 +80,47 @@ function sorting(arr) {
  * @return {boolean}
  */
 function isMatching(full, chunk) {
+
+    if (full.trim().toLowerCase().indexOf(chunk.toLowerCase()) + 1) {
+        // console.log('true');
+        // console.log(full, chunk);
+
+        return true;
+    }
+    // console.log('false');
+
+    return false;
 }
 
 let loadingBlock = homeworkContainer.querySelector('#loading-block');
 let filterBlock = homeworkContainer.querySelector('#filter-block');
 let filterInput = homeworkContainer.querySelector('#filter-input');
 let filterResult = homeworkContainer.querySelector('#filter-result');
-let townsPromise;
+let townsPromise = loadTowns();
+
+document.addEventListener('DOMContentLoaded', function() {
+    townsPromise
+        .then(function () {
+            loadingBlock.style = 'display: none;';
+            filterBlock.style = 'display: block;';
+            // filterResult.textContent = arrCity.split("");
+        });
+
+    // Вопрос о двух обработчиках !!!
+});
 
 filterInput.addEventListener('keyup', function() {
+
+    townsPromise
+        .then(function (arrCity) {
+            var filtValue = filterInput.value;
+
+            arrCity.forEach(function (item) {
+                if (isMatching(item.name, filtValue)) {
+                    console.log(item.name);
+                }
+            });
+        });
 
 });
 

@@ -8,7 +8,7 @@
  */
 function delayPromise(seconds) {
     var sec = seconds * 1000;
-    var promise = new Promise(function (resolve, reject) {
+    var promise = new Promise(function (resolve) {
         setTimeout(function () {
             resolve();
         }, sec);
@@ -26,7 +26,7 @@ function delayPromise(seconds) {
  */
 function loadAndSortTowns() {
 
-    var promise = new Promise(function (resolve, reject) {
+    var promise = new Promise(function (resolve) {
 
         var xhr = new XMLHttpRequest();
 
@@ -35,7 +35,7 @@ function loadAndSortTowns() {
         xhr.addEventListener('load', () => {
             var arrCity = JSON.parse(xhr.response);
 
-            console.log(arrCity);
+            // console.log(arrCity);
             resolve(sorting(arrCity));
         });
     });
