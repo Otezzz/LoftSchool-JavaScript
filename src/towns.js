@@ -36,16 +36,21 @@ let homeworkContainer = document.querySelector('#homework-container');
  * @return {Promise<Array<{name: string}>>}
  */
 function loadTowns() {
-    return new Promise(function (resolve) {
+    return new Promise(function (resolve, reject) {
 
         var xhr = new XMLHttpRequest();
 
         xhr.open('GET', 'https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json');
         xhr.send();
         xhr.addEventListener('load', () => {
-            var arrCity = JSON.parse(xhr.response);
 
-            resolve(sorting(arrCity));
+            if (xhr.status === 200) {
+                var arrCity = JSON.parse(xhr.response);
+
+                resolve(sorting(arrCity));
+            } else {
+                reject();
+            }
         });
     });
 }
@@ -81,13 +86,13 @@ function sorting(arr) {
  */
 function isMatching(full, chunk) {
 
-    if (full.trim().toLowerCase().indexOf(chunk.toLowerCase()) + 1) {
-        // console.log('true');
-        // console.log(full, chunk);
+    if (chunk === '') {
+        return false;
+
+    } else if (full.trim().toLowerCase().indexOf(chunk.toLowerCase()) + 1) {
 
         return true;
     }
-    // console.log('false');
 
     return false;
 }
@@ -103,7 +108,20 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(function () {
             loadingBlock.style = 'display: none;';
             filterBlock.style = 'display: block;';
-            // filterResult.textContent = arrCity.split("");
+        })
+        .catch(function () {
+            alert('Не удалось загрузить города');
+            var reloadBtn = document.createElement('button');
+
+            reloadBtn.innerText = 'Повторить';
+
+            loadingBlock.style = 'display: none;';
+            homeworkContainer.appendChild(reloadBtn);
+
+            reloadBtn.addEventListener('click', function () {
+                homeworkContainer.removeChild(reloadBtn);
+                document.dispatchEvent(new Event('DOMContentLoaded'));
+            });
         });
 
     // Вопрос о двух обработчиках !!!
@@ -115,9 +133,14 @@ filterInput.addEventListener('keyup', function() {
         .then(function (arrCity) {
             var filtValue = filterInput.value;
 
+            filterResult.innerHTML = '';
+
             arrCity.forEach(function (item) {
                 if (isMatching(item.name, filtValue)) {
-                    console.log(item.name);
+                    var resultBlock = document.createElement('div');
+
+                    resultBlock.textContent = item.name;
+                    filterResult.appendChild(resultBlock);
                 }
             });
         });
