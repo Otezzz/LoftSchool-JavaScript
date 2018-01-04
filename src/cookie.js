@@ -38,18 +38,11 @@ let addNameInput = homeworkContainer.querySelector('#add-name-input');
 let addValueInput = homeworkContainer.querySelector('#add-value-input');
 let addButton = homeworkContainer.querySelector('#add-button');
 let listTable = homeworkContainer.querySelector('#list-table tbody');
-let tableHtml = '<tr><td class="name"></td><td class="value"></td><td><button id=""></button></td></tr>';
-
-
-import { createCookie, deleteCookie } from './index';
 
 filterNameInput.addEventListener('keyup', function() {
-
 });
 
 addButton.addEventListener('click', () => {
-    listTable.insertAdjacentHTML('beforeend', tableHtml);
-    listTable.querySelector('#list-table tbody tr:last-child .name').innerText = addNameInput.value;
-    listTable.querySelector('#list-table tbody tr:last-child .value').innerText = addValueInput.value;
-    createCookie(addNameInput.value, addValueInput.value);
 });
+
+import { createCookie, deleteCookie } from './index';

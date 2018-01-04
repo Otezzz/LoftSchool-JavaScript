@@ -16,7 +16,6 @@ function createWindow(name, width, height) {
 
 createWindow('Yes', 100, 100);
 
-
 /**
  * Функция должна закрывать указанное окно
  *
