@@ -36,13 +36,42 @@ let homeworkContainer = document.querySelector('#homework-container');
 let filterNameInput = homeworkContainer.querySelector('#filter-name-input');
 let addNameInput = homeworkContainer.querySelector('#add-name-input');
 let addValueInput = homeworkContainer.querySelector('#add-value-input');
-let addButton = homeworkContainer.querySelector('#add-button');
 let listTable = homeworkContainer.querySelector('#list-table tbody');
-
-filterNameInput.addEventListener('keyup', function() {
-});
-
-addButton.addEventListener('click', () => {
-});
+let addButton = homeworkContainer.querySelector('#add-button');
+let tableHtml =
+    '<tr><td class="name"></td><td class="value"></td><td><button>Удалить</button></td></tr>';
 
 import { createCookie, deleteCookie } from './index';
+
+filterNameInput.addEventListener('keyup', () => {
+
+});
+
+
+addButton.addEventListener('click', () => {
+    var names = listTable.querySelectorAll('.name');
+
+    listTable.insertAdjacentHTML('beforeend', tableHtml);
+    listTable.querySelector('tr:last-child .name').innerText = addNameInput.value;
+    listTable.querySelector('tr:last-child .value').innerText = addValueInput.value;
+    listTable.querySelector('tr:last-child').classList.add(addNameInput.value);
+    listTable.querySelector('tr:last-child button').setAttribute('id', addNameInput.value);
+    createCookie(addNameInput.value, addValueInput.value);
+
+    for (var i = 0; i < names.length; i++) {
+        if (names[i].innerText === addNameInput.value ) {
+            names[i].nextSibling.innerText = addValueInput.value;
+            listTable.querySelector('tr:last-child').remove();
+        }
+    }
+});
+
+listTable.addEventListener('click', (e) => {
+    if (e.target.tagName === 'BUTTON') {
+        let delTr = e.target.parentNode.parentNode;
+        let attr = e.target.getAttribute('id');
+
+        delTr.remove();
+        deleteCookie(attr);
+    }
+});
